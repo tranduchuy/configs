@@ -77,6 +77,9 @@ Plug 'tpope/vim-eunuch'                                 " run common Unix comman
 Plug 'machakann/vim-sandwich'                           " make sandwiches
 Plug 'easymotion/vim-easymotion'                        " make movement a lot faster and easier
 Plug '907th/vim-auto-save'                              " nothing beats things
+Plug 'rking/ag.vim', {'on': 'Ag'}
+Plug 'jiangmiao/auto-pairs'
+Plug 'voldikss/vim-floaterm' " floating window
 call plug#end()
 
 "}}}
@@ -132,13 +135,12 @@ hi DiffRemoved guibg=#0f111a guifg=#e53935
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
 
 " performance tweaks
-set nocursorline
+set cursorline
 set nocursorcolumn
 set scrolljump=5
 set redrawtime=10000
 set synmaxcol=180
 set re=1
-" set cursorline
 
 " required by coc
 set hidden
@@ -317,6 +319,9 @@ let g:semshi#error_sign	= v:false                       " let ms python lsp hand
 let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 let $FZF_DEFAULT_OPTS="--reverse "                      " top to bottom
 
+" folded functions
+hi Folded guibg=#000000
+
 " use rg by default
 if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
@@ -433,6 +438,7 @@ nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>q :bd<CR>
 map <leader>v :Vista finder<CR>
 nnoremap <silent> <leader>f<Enter> :GFiles<CR>
+nnoremap <silent> <leader>fs<Enter> :GoFillStruct<CR>
 nnoremap <silent> <leader>z0 :set foldlevel=0<CR>
 nnoremap <silent> <leader>z1 :set foldlevel=1<CR>
 nnoremap <silent> <leader>z2 :set foldlevel=2<CR>
@@ -565,3 +571,13 @@ let g:ale_linters.typescript = ['eslint', 'tsserver']
 let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_fix_on_save = 1
 let g:ale_linters_explicit = 1
+
+" ag.vim
+let g:ag_working_path_mode="r"
+
+" Terminal mode key map
+tnoremap <C-s> <C-\><C-n>
+nnoremap <leader>n :FloatermNext<CR>
+nnoremap <leader>p :FloatermPrev<CR>
+nnoremap <leader>o :FloatermNew --width=0.8 --height=0.8<CR>
+nnoremap <leader>s :FloatermToggle<CR>
